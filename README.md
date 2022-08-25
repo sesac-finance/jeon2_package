@@ -2,7 +2,7 @@
 
 네이버 금융 / Investing.com을 참고하여 거래량 순으로 국내 ETF / 미국 주식 종목코드를 넣어주면,
 <br/><br/>
-해당 종목들의 작일 주가와 변동성 돌파 전략(Volatility Breakout by Larry Williams)을 기반으로 매수 조건에 맞는지 파악한 뒤
+해당 종목들의 주가와 변동성 돌파 전략(Volatility Breakout by Larry Williams)을 기반으로 매수 조건에 맞는지 파악한 뒤
 <br/><br/>
 한국투자증권 Open API를 활용하여 자동 매매(데이 트레이드)하는 패키지.
 <br/><br/>
