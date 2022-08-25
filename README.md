@@ -17,7 +17,7 @@
 
 │   ├── UsaStockAutoTrade.py
 
-│   ├── config.yaml
+│   └── config.yaml
 
 <br/><br/>
 
