@@ -3,6 +3,7 @@
 
 # 한국투자증권 주식 매매 자동화
 config.yaml
+StockLog.log
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
