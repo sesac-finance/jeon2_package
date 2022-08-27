@@ -20,13 +20,21 @@
 
 │   ├── UsaStockAutoTrade.py
 
+│   ├── StockAuto.sh
+
+│   ├── StockLog.log
+
 │   └── config.yaml
 
 <br/>
 
 ## 모듈 설명
-- KoreaStockAutoTrade.py: 국내 ETF 자동 매매.
+- KoreaStockAutoTrade.py: 국내 ETF 자동 매매
 
-- UsaStockAutoTrade.py: 미국 주식 자동 매매.
+- UsaStockAutoTrade.py: 미국 주식 자동 매매
+
+- StockAuto.sh: 부팅 시 crontab으로 .py 모듈들이 자동 실행되는 쉘 스크립트
+
+- StockLog.log: 자동 매매 로그. 매수 / 매도, 보유 종목, 잔고, 손익 기록
 
 - config.yaml: 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
