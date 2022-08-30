@@ -3,6 +3,8 @@ import json
 import datetime
 import time
 import yaml
+import requests
+from bs4 import BeautifulSoup
 
 with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
@@ -218,6 +220,9 @@ def StockCrawler():
     stocks = soup.select('.type_2 tr')[2:]
     
     codes = []
+
+    blance = get_stock_balance() # 추가
+    counts = 5 # 추가
     
     for stock in stocks:
         try:
@@ -225,14 +230,16 @@ def StockCrawler():
             price = stock.select_one('.number').text.replace(',', '')
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
-            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000):
+            # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000): # 원본
+            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)): # 수정 후
                 codes.append(code)
             else:
                 pass
         except:
             continue
 
-        if len(codes) == 5:
+        # if len(codes) == 5: # 원본
+        if len(codes) == counts: # 수정 후
             break
         
     return codes
