@@ -1,6 +1,6 @@
 # <u>주식 자동 매매 패키지</u>
 
-네이버 금융 / Investing.com을 참고하여 거래량 순으로 국내 ETF / 미국 주식 종목코드를 넣어주면,
+네이버 금융 / Investing.com을 참고하여 거래량 순으로 국내 / 미국 주식 종목코드를 넣어주면,
 <br/><br/>
 해당 종목들의 주가와 변동성 돌파 전략(Volatility Breakout by Larry Williams)을 기반으로 매수 조건에 맞는지 파악한 뒤
 <br/><br/>
@@ -20,6 +20,8 @@
 
 │   ├── UsaStockAutoTrade.py
 
+│   ├── StockCrawler.py
+
 │   ├── StockAuto.sh
 
 │   ├── StockLog.log
@@ -31,9 +33,11 @@
 <br/>
 
 ## 모듈 설명
-- KoreaStockAutoTrade.py: 국내 ETF 자동 매매
+- KoreaStockAutoTrade.py: 국내 주식 자동 매매
 
 - UsaStockAutoTrade.py: 미국 주식 자동 매매
+
+- StockCrawler.py: 주식 종목코드 크롤러 on 네이버 금융 by 거래량순
 
 - StockAuto.sh: 부팅 시 crontab으로 .py 모듈들이 자동 실행되는 쉘 스크립트
 
