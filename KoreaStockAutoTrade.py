@@ -210,10 +210,38 @@ def sell(code="005930", qty="1"):
         send_message(f"[매도 실패]{str(res.json())}")
         return False
 
+def StockCrawler():
+    URL = 'https://finance.naver.com/sise/sise_quant.nhn'
+    res = requests.get(URL)
+
+    soup = BeautifulSoup(res.text, 'html.parser')
+    stocks = soup.select('.type_2 tr')[2:]
+    
+    codes = []
+    
+    for stock in stocks:
+        try:
+            stock_n = stock.select_one('.tltle').text
+            price = stock.select_one('.number').text.replace(',', '')
+            code = stock.select_one('.tltle').attrs['href'][-6:]
+
+            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000):
+                codes.append(code)
+            else:
+                pass
+        except:
+            continue
+
+        if len(codes) == 5:
+            break
+        
+    return codes
+
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-    symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
+    symbol_list = StockCrawler()
+    # symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
     """
     KODEX 코스닥150선물인버스, 251340
     KODEX 인버스, 114800
