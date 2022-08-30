@@ -45,4 +45,4 @@
 
 - config.yaml: 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
 
-- urls.txt : 웹 크롤링 할 사이트 주소
+- urls.txt: 웹 크롤링 할 사이트 주소
