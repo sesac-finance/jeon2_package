@@ -213,12 +213,10 @@ def sell(code="005930", qty="1"):
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-    symbol_list = ["251340", "114800", "002360", "008350", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
+    symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
     """
-    KODEX 코스닥150선물인버스,
-    KODEX 인버스,
-    SH에너지화학,
-    남선알미늄,
+    KODEX 코스닥150선물인버스, 251340
+    KODEX 인버스, 114800
     KH 필룩스
     """
     bought_list = [] # 매수 완료된 종목 리스트
