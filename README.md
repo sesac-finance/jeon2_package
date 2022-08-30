@@ -24,7 +24,9 @@
 
 │   ├── StockLog.log
 
-│   └── config.yaml
+│   ├── config.yaml
+
+│   └── urls.txt
 
 <br/>
 
@@ -38,3 +40,5 @@
 - StockLog.log: 자동 매매 로그. 매수 / 매도, 보유 종목, 잔고, 손익 기록
 
 - config.yaml: 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
+
+- urls.txt : 웹 크롤링 할 사이트 주소
