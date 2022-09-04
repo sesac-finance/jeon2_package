@@ -5,6 +5,9 @@
 config.yaml
 StockLog.log
 
+# Instagram Account Info
+InstagramConfig.yaml
+
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
