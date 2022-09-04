@@ -59,4 +59,4 @@
 
 - SkinnyBrownInstagramCrawler.ipynb: 번외. 스키니 브라운 인스타그램에서 공연 관련 해시태그가 포함된 최신 게시물만 크롤링
 
-- InstagramConfig.yaml: 인스타그램 로그인 계정 정보 파일
+- InstagramConfig.yaml: 번외. 인스타그램 로그인 계정 정보 파일
