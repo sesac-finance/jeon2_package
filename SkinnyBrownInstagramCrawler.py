@@ -51,6 +51,8 @@ hrefs = []
 for a in aTags:
     hrefs.append(a.get_attribute('href'))
     
+recent6 = hrefs[:6]
+    
 filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
 feed = [] # URL, Tag 딕셔너리 담은 리스트
 posts = [] # 모든 포스트(최근 6개)
@@ -95,4 +97,4 @@ for i in range(6):
 # 크롬드라이버 종료
 driver.close()
 
-feed
+print(feed, content, sep = '\n')
