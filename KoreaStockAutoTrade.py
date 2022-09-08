@@ -83,7 +83,7 @@ def get_target_price(code="005930"):
     stck_oprc = int(res.json()['output'][0]['stck_oprc']) #오늘 시가
     stck_hgpr = int(res.json()['output'][1]['stck_hgpr']) #전일 고가
     stck_lwpr = int(res.json()['output'][1]['stck_lwpr']) #전일 저가
-    target_price = stck_oprc + (stck_hgpr - stck_lwpr) * 0.5
+    target_price = stck_oprc + (stck_hgpr - stck_lwpr) * 0.5 # 돌파계수 K
     return target_price
 
 def get_stock_balance():
