@@ -30,15 +30,15 @@
 
 │   ├── config.yaml
 
-│   ├── urls.txt
-
-│   ├── README.md
-
 │   ├── SkinnyBrownInstagramCrawler.py
 
 │   ├── InstagramConfig.yaml
 
-│   └── requirements.txt
+│   ├── requirements.txt
+
+│   ├── urls.txt
+
+│   └── README.md
 
 <br/>
 
