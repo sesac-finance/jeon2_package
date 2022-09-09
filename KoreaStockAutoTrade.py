@@ -231,7 +231,7 @@ def StockCrawler():
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
             # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000): # 원본
-            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)): # 수정 후
+            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (int(blance) / counts)): # 수정 후
                 codes.append(code)
             else:
                 pass

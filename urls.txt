@@ -1,2 +1,8 @@
 Naver 금융_홈_국내증시_거래상위
 https://finance.naver.com/sise/sise_quant.nhn
+
+Naver 금융_홈_국내증시_거래 종목별 일별 시세
+https://finance.naver.com/item/sise_day.naver?code=
+
+스키니 브라운 인스타그램
+https://www.instagram.com/skinnybrownn/

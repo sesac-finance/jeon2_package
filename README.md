@@ -36,7 +36,9 @@
 
 │   ├── SkinnyBrownInstagramCrawler.py
 
-│   └── InstagramConfig.yaml
+│   ├── InstagramConfig.yaml
+
+│   └── requirements.txt
 
 <br/>
 
@@ -47,16 +49,20 @@
 
 - StockCrawler.py: 주식 종목코드 크롤러 on 네이버 금융 by 거래량순
 
-- StockCrawler2.ipynb: StockCrawler.py Ver. 2. 추가 데이터 수집 및 시각화 예정
+- StockCrawler2.ipynb: StockCrawler.py Ver. 2. 추가 데이터 수집 및 시각화 작업 중
 
-- StockAuto.sh: 부팅 시 crontab으로 .py 모듈들이 자동 실행되는 쉘 스크립트
+- StockAuto.sh: 평일 오전 9시 10분에 crontab으로 국내 주식 자동 매매 모듈이 자동 실행되는 쉘 스크립트
 
 - StockLog.log: 자동 매매 로그. 매수 / 매도, 보유 종목, 잔고, 손익 기록
 
 - config.yaml: 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
 
-- urls.txt: 웹 크롤링 할 사이트 주소
-
 - SkinnyBrownInstagramCrawler.py: 번외. 스키니 브라운 인스타그램에서 공연 관련 해시태그가 포함된 최신 게시물만 크롤링
 
 - InstagramConfig.yaml: 번외. 인스타그램 로그인 계정 정보 파일
+
+- requirements.txt: Anaconda 가상환경에 설치된 패키지들 목록
+
+- urls.txt: 웹 크롤링 할 사이트 주소
+
+- README.md: 패키지 설명
