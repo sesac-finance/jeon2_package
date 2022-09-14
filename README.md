@@ -13,7 +13,7 @@
 
 <!-- <img src='https://github.com/sesac-finance/jeon2_package/blob/master/20220915_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true'  width='200' height='400'/> -->
 
-![img](https://github.com/sesac-finance/jeon2_package/blob/master/20220915_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true)
+<!-- ![img](https://github.com/sesac-finance/jeon2_package/blob/master/20220915_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true) -->
 <br>
 
 ## 폴더 구조
