@@ -5,7 +5,7 @@ import time
 import yaml
 from bs4 import BeautifulSoup
 
-with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/config.yaml', encoding='UTF-8') as f:
+with open('./config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
 APP_SECRET = _cfg['APP_SECRET']
@@ -246,13 +246,10 @@ def StockCrawler():
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-    symbol_list = StockCrawler()
+    stock_codes = StockCrawler() # 거래 안 됨?!?!
+    symbol_list = stock_codes # 거래 되려나????
+    # symbol_list = ['091090', '006220', '001570', '071090', '011000'] # 거래 됨
     # symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
-    """
-    KODEX 코스닥150선물인버스, 251340
-    KODEX 인버스, 114800
-    KH 필룩스
-    """
     bought_list = [] # 매수 완료된 종목 리스트
     total_cash = get_balance() # 보유 현금 조회
     stock_dict = get_stock_balance() # 보유 주식 조회
