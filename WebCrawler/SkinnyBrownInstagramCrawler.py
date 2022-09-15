@@ -46,12 +46,12 @@ elem.send_keys(Keys.ENTER)
 # elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
 #     .until(EC.presence_of_element_located((By.XPATH, '//*[@id="react-root"]/section/main/div/div/div/div/button')))
 elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
+    .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
 elem = WebDriverWait(driver, 3, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.CLASS_NAME, '_a9--._a9_1')))
+    .until(EC.element_to_be_clickable((By.CLASS_NAME, '_a9--._a9_1')))
 
 elem.click() # XPATH 일부가 매번 바뀌기 때문에 class로 찾아 줌
 
