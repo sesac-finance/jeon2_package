@@ -246,9 +246,11 @@ def StockCrawler():
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
-    stock_codes = StockCrawler() # 거래 안 됨?!?!
-    symbol_list = stock_codes # 거래 되려나????
-    # symbol_list = ['091090', '006220', '001570', '071090', '011000'] # 거래 됨
+    symbol_list = StockCrawler()
+    symbol_list = []
+    # stock_codes = StockCrawler() # 거래 안 됨?!?!
+    # symbol_list = stock_codes # 거래 안 됨?!?!
+    # symbol_list = ['091090', '005110', '001570', '011930', '034020'] # 거래 됨 on 9/15
     # symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
     bought_list = [] # 매수 완료된 종목 리스트
     total_cash = get_balance() # 보유 현금 조회
@@ -280,6 +282,7 @@ try:
             bought_list = []
             stock_dict = get_stock_balance()
         if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수
+            print(symbol_list) # added for debugging on 9/15
             for sym in symbol_list:
                 if len(bought_list) < target_buy_count:
                     if sym in bought_list:
@@ -291,7 +294,10 @@ try:
                         buy_qty = int(buy_amount // current_price)
                         if buy_qty > 0:
                             send_message(f"{sym} 목표가 달성({target_price} < {current_price}) 매수를 시도합니다.")
-                            result = buy(sym, buy_qty)
+                            try:
+                                result = buy(sym, buy_qty)
+                            except Exception as e: # added for debugging on 9/15
+                                print(f'오류 발생: {e}') # added for debugging on 9/15
                             if result:
                                 soldout = False
                                 bought_list.append(sym)
