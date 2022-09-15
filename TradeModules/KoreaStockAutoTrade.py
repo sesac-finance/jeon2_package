@@ -1,8 +1,8 @@
-import requests
 import json
 import datetime
 import time
 import yaml
+import requests
 from bs4 import BeautifulSoup
 
 with open('./config.yaml', encoding='UTF-8') as f:
@@ -125,7 +125,7 @@ def get_stock_balance():
     time.sleep(0.1)
     send_message(f"총 평가 금액: {evaluation[0]['tot_evlu_amt']}원")
     time.sleep(0.1)
-    send_message(f"==================")
+    send_message(f"=====================")
     return stock_dict
 
 def get_balance():
@@ -220,7 +220,7 @@ def StockCrawler():
     
     codes = []
 
-    blance = get_stock_balance() # 추가
+    blance = get_balance() # 추가
     counts = 5 # 추가
     
     for stock in stocks:
@@ -229,29 +229,22 @@ def StockCrawler():
             price = stock.select_one('.number').text.replace(',', '')
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
-            # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000): # 원본
-            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (int(blance) / counts)): # 수정 후
+            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)):
                 codes.append(code)
             else:
                 pass
         except:
             continue
 
-        # if len(codes) == 5: # 원본
-        if len(codes) == counts: # 수정 후
+        if len(codes) == counts:
             break
         
-    return codes
+    return list(codes)
 
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
     symbol_list = StockCrawler()
-    symbol_list = []
-    # stock_codes = StockCrawler() # 거래 안 됨?!?!
-    # symbol_list = stock_codes # 거래 안 됨?!?!
-    # symbol_list = ['091090', '005110', '001570', '011930', '034020'] # 거래 됨 on 9/15
-    # symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
     bought_list = [] # 매수 완료된 종목 리스트
     total_cash = get_balance() # 보유 현금 조회
     stock_dict = get_stock_balance() # 보유 주식 조회
@@ -272,6 +265,9 @@ try:
         t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
         t_exit = t_now.replace(hour=15, minute=20, second=0,microsecond=0)
         today = datetime.datetime.today().weekday()
+
+        print(f'거래상위 5개 종목: {symbol_list}') # added for debugging on 9/15
+
         if today == 5 or today == 6:  # 토요일이나 일요일이면 자동 종료
             send_message("주말이므로 프로그램을 종료합니다.")
             break
@@ -282,7 +278,6 @@ try:
             bought_list = []
             stock_dict = get_stock_balance()
         if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수
-            print(symbol_list) # added for debugging on 9/15
             for sym in symbol_list:
                 if len(bought_list) < target_buy_count:
                     if sym in bought_list:
@@ -297,7 +292,7 @@ try:
                             try:
                                 result = buy(sym, buy_qty)
                             except Exception as e: # added for debugging on 9/15
-                                print(f'오류 발생: {e}') # added for debugging on 9/15
+                                print(f'매수 오류 발생: {e}') # added for debugging on 9/15
                             if result:
                                 soldout = False
                                 bought_list.append(sym)
