@@ -5,7 +5,7 @@ import yaml
 import requests
 from bs4 import BeautifulSoup
 
-with open('./config.yaml', encoding='UTF-8') as f:
+with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
 APP_SECRET = _cfg['APP_SECRET']
