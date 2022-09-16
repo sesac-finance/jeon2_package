@@ -258,6 +258,7 @@ try:
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
+    send_message(f"거래상위 5개 종목: {symbol_list}") # added for debugging on 9/15
     while True:
         t_now = datetime.datetime.now()
         t_9 = t_now.replace(hour=9, minute=0, second=0, microsecond=0)
@@ -265,8 +266,6 @@ try:
         t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
         t_exit = t_now.replace(hour=15, minute=20, second=0,microsecond=0)
         today = datetime.datetime.today().weekday()
-
-        print(f'거래상위 5개 종목: {symbol_list}') # added for debugging on 9/15
 
         if today == 5 or today == 6:  # 토요일이나 일요일이면 자동 종료
             send_message("주말이므로 프로그램을 종료합니다.")
