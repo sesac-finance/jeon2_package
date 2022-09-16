@@ -14,18 +14,35 @@ from selenium.common.exceptions import StaleElementReferenceException
 import time
 import telegram
 
+ig_e = (NoSuchElementException, StaleElementReferenceException,)
+
+# 인스타그램 계정
+with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/InstagramConfig.yaml', encoding='UTF-8') as f:
+    _cfg = yaml.load(f, Loader=yaml.FullLoader)
+username = _cfg['username']
+userpw = _cfg['userpw']
+
+# 인스타그램 로그인 URL
+loginURL = 'https://www.instagram.com/accounts/login/'
+
+# Skinny Brown Instagram URL
+skinnyURL = 'https://www.instagram.com/skinnybrownn/'
+
+# Tags
+filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
+
+# 텔레그램 봇
+telegram_config = {}
+with open('/mnt/FE0A5E240A5DDA6B/workspace/practice/RPA/telegram_config', 'r') as f:
+    configs = f.readlines()
+    for config in configs:
+        key, value = config.rstrip().split('=')
+        telegram_config[key] = value
+
+token = telegram_config['token']
+chat_id = telegram_config['chat_id']
+
 def SBInsta():
-    ig_e = (NoSuchElementException, StaleElementReferenceException,)
-
-    # 인스타그램 로그인 계정
-    with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/InstagramConfig.yaml', encoding='UTF-8') as f:
-        _cfg = yaml.load(f, Loader=yaml.FullLoader)
-    username = _cfg['username']
-    userpw = _cfg['userpw']
-
-    # 인스타그램 로그인 URL
-    loginURL = 'https://www.instagram.com/accounts/login/'
-
     # Chrome driver 실행
     driver = wd.Chrome(service=Service(ChromeDriverManager().install())) # Selenium 4 버전 대
     driver.get(loginURL)
@@ -51,7 +68,6 @@ def SBInsta():
         .until(EC.element_to_be_clickable((By.CLASS_NAME, '_a9--._a9_1'))) # XPATH 일부가 매번 바뀌기 때문에 class로 찾아 줌
     elem.click()
 
-    skinnyURL = 'https://www.instagram.com/skinnybrownn/' # Skinny Brown Instagram URL
     driver.get(skinnyURL)
     driver.implicitly_wait(3)
 
@@ -65,7 +81,6 @@ def SBInsta():
     for a in aTags:
         recent6.append(a.get_attribute('href'))
         
-    filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
     feed = [] # URL, Tag 딕셔너리 담은 리스트
     posts = [] # 모든 포스트(최근 3개)
     content = [] # 필요한 태그가 들어가 있는 포스트만
@@ -114,17 +129,8 @@ def SBInsta():
 
 # 텔레그램 시작
 def TeleBot():
-    telegram_config = {}
-    with open('/mnt/FE0A5E240A5DDA6B/workspace/practice/RPA/telegram_config', 'r') as f:
-        configs = f.readlines()
-        for config in configs:
-            key, value = config.rstrip().split('=')
-            telegram_config[key] = value
-
-    token = telegram_config['token']
-    chat_id = telegram_config['chat_id']
     bot = telegram.Bot(token)
-    feed = SBInsta()
+    feed = list(SBInsta())
     msg = str(*feed)
     bot.send_message(chat_id, text='봇이 작동하기 시작합니다.')
     print('봇이 작동하기 시작합니다. 명령을 다 내린 후에는 봇을 종료해주세요.')
