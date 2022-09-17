@@ -70,7 +70,7 @@ nbformat==5.4.0
 nest-asyncio @ file:///tmp/build/80754af9/nest-asyncio_1649830051683/work
 notebook @ file:///tmp/abs_abf6xa6h6f/croots/recipe/notebook_1659083654985/work
 numpy==1.23.2
-oauthlib==3.2.0
+oauthlib==3.2.1
 opt-einsum==3.3.0
 outcome==1.2.0
 packaging @ file:///tmp/build/80754af9/packaging_1637314298585/work
