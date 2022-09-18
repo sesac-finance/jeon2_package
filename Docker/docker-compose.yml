@@ -3,3 +3,4 @@ services:
   app:
     image: node:10-alpine
     tty: true
+  environment: -TZ=Asia/Seoul

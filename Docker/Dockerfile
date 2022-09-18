@@ -20,11 +20,7 @@ COPY KoreaStockAutoTrade.py ./KoreaStockAutoTrade.py
 
 COPY config.yaml ./config.yaml
 
-# CMD [ "~/bin/sh", "-c", ""] # CMD, ENTRYPOINT 둘 중 하나만 쓰기
-
 ENTRYPOINT [ "python", "KoreaStockAutoTrade.py"]
 
 # keeping a Docker container alive
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-# CMD ["tail", "-f", "/dev/null"]
-# CMD ["sleep", "infinity"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]

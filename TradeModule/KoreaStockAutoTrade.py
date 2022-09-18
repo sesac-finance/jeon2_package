@@ -250,15 +250,14 @@ try:
     stock_dict = get_stock_balance() # 보유 주식 조회
     for sym in stock_dict.keys():
         bought_list.append(sym)
-    # target_buy_count = 3
-    target_buy_count = 5 # 매수할 종목 수, default = 3
-    # buy_percent = 0.33
-    buy_percent = 0.2 # 종목당 매수 금액 비율, default = 0.33
+    target_buy_count = 3 # 매수할 종목 수
+    buy_percent = 0.33 # 종목당 매수 금액 비율
     buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
-    send_message(f"거래상위 5개 종목: {symbol_list}") # added for debugging on 9/15
+    send_message(f"거래상위 5개 종목: {symbol_list}")
+
     while True:
         t_now = datetime.datetime.now()
         t_9 = t_now.replace(hour=9, minute=0, second=0, microsecond=0)
@@ -288,10 +287,7 @@ try:
                         buy_qty = int(buy_amount // current_price)
                         if buy_qty > 0:
                             send_message(f"{sym} 목표가 달성({target_price} < {current_price}) 매수를 시도합니다.")
-                            try:
-                                result = buy(sym, buy_qty)
-                            except Exception as e: # added for debugging on 9/15
-                                print(f'매수 오류 발생: {e}') # added for debugging on 9/15
+                            result = buy(sym, buy_qty)
                             if result:
                                 soldout = False
                                 bought_list.append(sym)

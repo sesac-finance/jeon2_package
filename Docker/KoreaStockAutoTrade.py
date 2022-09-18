@@ -1,4 +1,3 @@
-import requests
 import json
 import datetime
 import time
@@ -6,8 +5,6 @@ import yaml
 import requests
 from bs4 import BeautifulSoup
 
-# with open('/tmp/config.yaml', encoding='UTF-8') as f:
-# with open('./config.yaml', encoding='UTF-8') as f:
 with open('/jiyeon/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
@@ -128,7 +125,7 @@ def get_stock_balance():
     time.sleep(0.1)
     send_message(f"총 평가 금액: {evaluation[0]['tot_evlu_amt']}원")
     time.sleep(0.1)
-    send_message(f"==================")
+    send_message(f"=====================")
     return stock_dict
 
 def get_balance():
@@ -223,7 +220,7 @@ def StockCrawler():
     
     codes = []
 
-    blance = get_stock_balance() # 추가
+    blance = get_balance() # 추가
     counts = 5 # 추가
     
     for stock in stocks:
@@ -232,43 +229,35 @@ def StockCrawler():
             price = stock.select_one('.number').text.replace(',', '')
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
-            # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= 26000): # 원본
-            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (int(blance) / counts)): # 수정 후
+            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)):
                 codes.append(code)
             else:
                 pass
         except:
             continue
 
-        # if len(codes) == 5: # 원본
-        if len(codes) == counts: # 수정 후
+        if len(codes) == counts:
             break
         
-    return codes
+    return list(codes)
 
 # 자동매매 시작
 try:
     ACCESS_TOKEN = get_access_token()
     symbol_list = StockCrawler()
-    # symbol_list = ["251340", "114800", "033180"] # 매수 희망 ETF(without "A") & 종목 리스트. 거래량 내림차순
-    """
-    KODEX 코스닥150선물인버스, 251340
-    KODEX 인버스, 114800
-    KH 필룩스
-    """
     bought_list = [] # 매수 완료된 종목 리스트
     total_cash = get_balance() # 보유 현금 조회
     stock_dict = get_stock_balance() # 보유 주식 조회
     for sym in stock_dict.keys():
         bought_list.append(sym)
-    # target_buy_count = 3
-    target_buy_count = 5 # 매수할 종목 수, default = 3
-    # buy_percent = 0.33
-    buy_percent = 0.2 # 종목당 매수 금액 비율, default = 0.33
+    target_buy_count = 3 # 매수할 종목 수
+    buy_percent = 0.33 # 종목당 매수 금액 비율
     buy_amount = total_cash * buy_percent  # 종목별 주문 금액 계산
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
+    send_message(f"거래상위 5개 종목: {symbol_list}")
+
     while True:
         t_now = datetime.datetime.now()
         t_9 = t_now.replace(hour=9, minute=0, second=0, microsecond=0)
@@ -276,6 +265,7 @@ try:
         t_sell = t_now.replace(hour=15, minute=15, second=0, microsecond=0)
         t_exit = t_now.replace(hour=15, minute=20, second=0,microsecond=0)
         today = datetime.datetime.today().weekday()
+
         if today == 5 or today == 6:  # 토요일이나 일요일이면 자동 종료
             send_message("주말이므로 프로그램을 종료합니다.")
             break
