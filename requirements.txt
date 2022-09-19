@@ -118,6 +118,7 @@ selenium==4.4.3
 Send2Trash @ file:///tmp/build/80754af9/send2trash_1632406701022/work
 sip @ file:///tmp/abs_44cd77b_pu/croots/recipe/sip_1659012365470/work
 six @ file:///tmp/build/80754af9/six_1644875935023/work
+sklearn==0.0
 sniffio==1.2.0
 sortedcontainers==2.4.0
 soupsieve==2.3.2.post1
@@ -126,6 +127,7 @@ tensorboard==2.9.1
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 tensorflow==2.9.1
+tensorflow-addons==0.17.1
 tensorflow-estimator==2.9.0
 tensorflow-gpu==2.9.1
 tensorflow-io-gcs-filesystem==0.26.0
@@ -140,6 +142,7 @@ tqdm==4.64.1
 traitlets==5.3.0
 trio==0.21.0
 trio-websocket==0.9.2
+typeguard==2.13.3
 typing_extensions @ file:///tmp/abs_ben9emwtky/croots/recipe/typing_extensions_1659638822008/work
 tzdata==2022.2
 tzlocal==4.2

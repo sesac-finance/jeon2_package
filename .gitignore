@@ -6,7 +6,7 @@
 *.iml
 *.log
 *.env
-.env
+*secret*
 db_config
 email_config
 
