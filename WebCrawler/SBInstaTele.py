@@ -13,6 +13,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 import time
 import telegram
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
 
 ig_e = (NoSuchElementException, StaleElementReferenceException,)
 
@@ -71,10 +73,10 @@ WebDriverWait(driver, 3, ignored_exceptions=ig_e)\
 
 aTags = driver.find_elements(By.CSS_SELECTOR, '._ac7v._aang a')[:3] # 최근 포스트 URL
 
-recent6 = []
+recent3 = []
 
 for a in aTags:
-    recent6.append(a.get_attribute('href'))
+    recent3.append(a.get_attribute('href'))
     
 filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
 feed = [] # URL, Tag 딕셔너리 담은 리스트
@@ -82,8 +84,8 @@ posts = [] # 모든 포스트(최근 3개)
 content = [] # 필요한 태그가 들어가 있는 포스트만
 
 for i in range(3):
-    response = requests.get(recent6[i])
-    soup = BeautifulSoup(response.text, 'html.parser')
+    response = requests.get(recent3[i])
+    soup = BeautifulSoup(response.text, 'lxml')
     text = re.sub('[\t\n\r\f\v]', '', soup.text)
     text = re.sub('Skinny Brown on Instagram: ', '', text)
     text = re.sub('"', '', text)
@@ -104,14 +106,14 @@ for i in range(3):
         else:
             continue
 
-    driver.get(recent6[i])
+    driver.get(recent3[i])
 
     date = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
     .until(EC.presence_of_element_located((By.TAG_NAME, 'time')))
 
     date = date.get_attribute('datetime')[:10]
 
-    urltags = f'날짜: {date}, 해시태그: {tags}, URL: {recent6[i]}'
+    urltags = f'날짜: {date}, 해시태그: {tags}, URL: {recent3[i]}'
     
     if tags == []:
         continue

@@ -1,10 +1,14 @@
 # FROM ubuntu:20.04
 FROM python:3.10.7-bullseye
 
+RUN apt-get update
+
 # Docker image 빌드 시 Timezone 설정(UTC -> KST)
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
 RUN apt-get install -y tzdata
+
+RUN apt-get install -y vim
 
 RUN mkdir ~/jiyeon # 작업 디렉터리 생성
 
