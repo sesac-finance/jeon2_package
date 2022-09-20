@@ -11,7 +11,7 @@
 ![img](https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjNfMjk3%2FMDAxNjI3MDM3NjkxMTI0.KkBJouUC9VmPiZsvYHAA4-uL40Fzxuwg9ORT3KVX6pcg.qE6T-aPICOQFNh4LaDXYyc9yd3Gjsm7WbZ3pjmVnvUMg.PNG.kc9994%2Fimage.png&type=sc960_832)
 <br>
 
-<P align='center'><img src="https://github.com/sesac-finance/jeon2_package/blob/master/20220915_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true", width="300" height="600"/> <img src="/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/20220920_한투손익.jpg" width="300" height="600"/><P>
+<P align='center'><img src="https://github.com/sesac-finance/jeon2_package/blob/master/20220915_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true", width="300" height="600"/> <img src="https://github.com/sesac-finance/jeon2_package/blob/master/20220920_%ED%95%9C%ED%88%AC%EC%86%90%EC%9D%B5.jpg?raw=true" width="300" height="600"/><P>
 
 <br>
 
