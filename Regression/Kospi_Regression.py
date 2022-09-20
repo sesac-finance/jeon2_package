@@ -48,4 +48,4 @@ def Regression(opponent:str='^DJI'):
         plt.title(f'USD x KOSPI (R = {regr.rvalue:.2f})')
         plt.savefig('/mnt/FE0A5E240A5DDA6B/workspace/USDKospi_Regression.png', format="png", dpi=300)
 
-    # plt.show()
+    plt.show()

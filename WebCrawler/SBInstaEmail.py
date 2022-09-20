@@ -55,8 +55,13 @@ elem.send_keys(userpw)
 elem.send_keys(Keys.ENTER)
 
 # 로그인 정보 나중에 저장하기 클릭하고 넘어가기
-elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-    .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
+try:
+    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
+except:
+    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_Nu > div > div > div > div.bdao358l.om3e55n1.g4tp4svg > div > div > div > div.alzwoclg.cqf1kptm.p1t2w4gn.fawcizw8.om3e55n1.g4tp4svg > div.bdao358l.cauy2b9r.alzwoclg.cmg2g80i.lk0hwhjd.nfcwbgbd.mivixfar.h4m39qi9.i54nktwv.z2vv26z9.c7y9u1f0.jez8cy9q.cqf1kptm.oq7qnk0t.o9w3sbdw.mx6umkf4.sl27f92c > div.mfclru0v.mdyuua9d.mu7z578c.dx5cv30n.b0g6smra.ixtmsaem > section > main > div > div > div > div > button')))
+
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
