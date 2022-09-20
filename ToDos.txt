@@ -16,3 +16,11 @@ Done
 4. EC2 주식자동거래 모듈 스케줄링 by crontab
 5. 주식 크롤러 데이터 시각화 (Regression)
 6. 주식 자동거래 함수 수정
+7. Regression 모듈 고도화 (그래프 저장 경로 및 비교 인자 선택 가능)
+8. EC2 볼륨 증량(EC2 AMI/스냅샷 vs. EBS 볼륨 수정)
+9. Docker on EC2 오류로 인해 재설치하여 복구
+10. EC2 SWAP 메모리 지정 (RAM + HDD 일부)
+
+Pending
+1. VS Code를 .deb 형식으로 재설치 후에도 한글 입력 불가
+2. 텔레그램 봇 종료 불가 (Updater, CommandHandler 사용 시. while문으로는 정상 작동)

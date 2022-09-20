@@ -31,18 +31,18 @@ userpw = _cfg['userpw']
 loginURL = 'https://www.instagram.com/accounts/login/'
 
 # Chrome Option 추가
-chrome_options = wd.ChromeOptions()
+# chrome_options = wd.ChromeOptions()
 # chrome_options.add_argument('lang=ko_KR')
 # chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--no-sandbox')
 # chrome_options.add_argument('--disable-gpu')
 # chrome_options.add_argument('--single-process')
-chrome_options.add_argument('window-size=1920,1080')
+# chrome_options.add_argument('window-size=1920,1080')
 # chrome_options.add_argument('--disable-dev-shm-usage')
 # chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36')
 
 # Chrome driver 실행
-driver = wd.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options) # Selenium 4 버전 대
+driver = wd.Chrome(service=Service(ChromeDriverManager().install())) # Selenium 4 버전 대 , options=chrome_options
 driver.get(loginURL)
 # user_agent = driver.find_element(By.CSS_SELECTOR, '#user-agent').text # no such element
 driver.implicitly_wait(3) # 처음 접속 시 대기(페이지 로딩 끝나면 진행)
@@ -58,13 +58,18 @@ elem.send_keys(userpw)
 elem.send_keys(Keys.ENTER)
 
 # 로그인 정보 나중에 저장하기 클릭하고 넘어가기
+# try:
+#     elem = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
+#         .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '._acan._acao button')))
+# except:
+#     elem = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
+#         .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_NM > div > div > div > div.bdao358l.om3e55n1.g4tp4svg > div > div > div > div.alzwoclg.cqf1kptm.p1t2w4gn.fawcizw8.om3e55n1.g4tp4svg > div.bdao358l.cauy2b9r.alzwoclg.cmg2g80i.lk0hwhjd.nfcwbgbd.mivixfar.h4m39qi9.i54nktwv.z2vv26z9.c7y9u1f0.jez8cy9q.cqf1kptm.oq7qnk0t.o9w3sbdw.mx6umkf4.sl27f92c > div.mfclru0v.mdyuua9d.mu7z578c.dx5cv30n.b0g6smra.ixtmsaem > section > main > div > div > div > div > button')))
 try:
-    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
+    elem = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '._acan._acao button')))
 except:
-    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_Nu > div > div > div > div.bdao358l.om3e55n1.g4tp4svg > div > div > div > div.alzwoclg.cqf1kptm.p1t2w4gn.fawcizw8.om3e55n1.g4tp4svg > div.bdao358l.cauy2b9r.alzwoclg.cmg2g80i.lk0hwhjd.nfcwbgbd.mivixfar.h4m39qi9.i54nktwv.z2vv26z9.c7y9u1f0.jez8cy9q.cqf1kptm.oq7qnk0t.o9w3sbdw.mx6umkf4.sl27f92c > div.mfclru0v.mdyuua9d.mu7z578c.dx5cv30n.b0g6smra.ixtmsaem > section > main > div > div > div > div > button')))
-
+    elem = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_NM > div > div > div > div.bdao358l.om3e55n1.g4tp4svg > div > div > div > div.alzwoclg.cqf1kptm.p1t2w4gn.fawcizw8.om3e55n1.g4tp4svg > div.bdao358l.cauy2b9r.alzwoclg.cmg2g80i.lk0hwhjd.nfcwbgbd.mivixfar.h4m39qi9.i54nktwv.z2vv26z9.c7y9u1f0.jez8cy9q.cqf1kptm.oq7qnk0t.o9w3sbdw.mx6umkf4.sl27f92c > div.mfclru0v.mdyuua9d.mu7z578c.dx5cv30n.b0g6smra.ixtmsaem > section > main > div > div > div > div > button')))
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
