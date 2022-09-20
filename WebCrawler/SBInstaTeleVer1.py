@@ -1,3 +1,8 @@
+"""
+<Version 1>
+- 신규 메시지 확인: bot.get_updates(), message.text 사용
+- 반복문으로 '멈춰' 혹은 '그만'이라는 명령에 봇 종료 가능
+"""
 import re
 import yaml
 import requests
@@ -13,8 +18,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 import time
 import telegram
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
 
 ig_e = (NoSuchElementException, StaleElementReferenceException,)
 
@@ -30,7 +33,7 @@ loginURL = 'https://www.instagram.com/accounts/login/'
 # Chrome Option 추가
 chrome_options = wd.ChromeOptions()
 # chrome_options.add_argument('lang=ko_KR')
-chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 # chrome_options.add_argument('--disable-gpu')
 # chrome_options.add_argument('--single-process')
