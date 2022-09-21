@@ -1,4 +1,3 @@
-from operator import index
 import pandas as pd
 from pandas_datareader import data as pdr
 import yfinance as yf # 금융 데이터 가져오는 Yahoo Finance

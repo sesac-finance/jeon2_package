@@ -1,22 +1,26 @@
 import re
 import yaml
+import smtplib
 import requests
+from email import encoders
+from os.path import basename
+from datetime import datetime
 from bs4 import BeautifulSoup
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
 from selenium import webdriver as wd
 from selenium.webdriver.common.by import By
+from email.mime.multipart import MIMEMultipart
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
-import time
-import telegram
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
 
-ig_e = (NoSuchElementException, StaleElementReferenceException,)
+
+ig_e = (NoSuchElementException, StaleElementReferenceException,) # 크롬 드라이버의 미미한 에러는 무시
 
 # 인스타그램 로그인 계정
 with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/InstagramConfig.yaml', encoding='UTF-8') as f:
@@ -29,27 +33,22 @@ loginURL = 'https://www.instagram.com/accounts/login/'
 
 # Chrome Option 추가
 chrome_options = wd.ChromeOptions()
-# chrome_options.add_argument('lang=ko_KR')
-# chrome_options.add_argument('--headless') # ***** 최소 옵션
-# chrome_options.add_argument('--no-sandbox')
-# chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--single-process') # ***** 최소 옵션
-# chrome_options.add_argument('window-size=1920,1080')
-# chrome_options.add_argument('--disable-dev-shm-usage')
-# chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36')
-
-chrome_options.add_argument("start-maximized") # open Browser in maximized mode
-chrome_options.add_argument("disable-infobars") # disabling infobars
-chrome_options.add_argument("--disable-extensions") # disabling extensions
-chrome_options.add_argument("--disable-gpu") # applicable to windows os only
-chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems ***** 최소 옵션
+chrome_options.add_argument("--incognito") # 시크릿 모드
 chrome_options.add_argument("--no-sandbox") # Bypass OS security model ***** 최소 옵션
-chrome_options.add_argument('--remote-debugging-port=9222')
+chrome_options.add_argument("--lang=ko_KR") # 한국어 설정
+chrome_options.add_argument("--start-maximized") # open Browser in maximized mode
+chrome_options.add_argument("--disable-infobars") # disabling infobars
+chrome_options.add_argument("--disable-extensions") # disabling extensions
+chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems. 메모리가 부족해서 에러가 발생하는 것을 막아줌 ***** 최소 옵션
+chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 드라이버에 setuid를 하지 않음으로써 크롬의 충돌을 막아줌
+chrome_options.add_argument("--remote-debugging-port=9222") # 실행된 크롬창을 사용하도록 지정 (원격 디버깅 설정)
+chrome_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36") # 사람인 척 하기
+# chrome_options.add_argument("--headless") # GUI 디스플레이가 없을 때 혹은 크롤링 팝업 뜨기 원치 않을 때 사용 ***** 최소 옵션
+# chrome_options.add_argument('--single-process') # 단일 프로세스로 다중 탭 방지***** 최소 옵션. 하지만 SessionNotCreatedException 발생시키는 원흉! :(
 
 # Chrome driver 실행
 driver = wd.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options) # Selenium 4 버전 대
 driver.get(loginURL)
-# user_agent = driver.find_element(By.CSS_SELECTOR, '#user-agent').text # no such element
 driver.implicitly_wait(3) # 처음 접속 시 대기(페이지 로딩 끝나면 진행)
 
 # login
@@ -89,7 +88,7 @@ posts = [] # 모든 포스트(최근 3개)
 content = [] # 원하는 태그가 들어가 있는 포스트만
 
 # 게시물에서 가져올 이미지들의 공통 Full XPath
-samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[2]/div/div/'
+samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[1]/div/div/'
 vid = 'div[1]/div/div/video' # 게시물이 영상일 경우
 img = 'div/div[1]/div[1]/img' # 게시물이 사진일 경우
 images = [] # 게시물에서 추출한 이미지의 src를 담을 리스트
@@ -147,10 +146,13 @@ for i in range(3):
     
     feed.append(urltags)
     
-# 크롬드라이버 종료
-driver.close()
+driver.close() # 크롬 드라이버 종료
 
 print(feed)
+
+# 웹 크롤링 끝
+
+# 이메일 시작
 
 SMTP_SERVER = 'smtp.naver.com'
 SMTP_PORT = 465

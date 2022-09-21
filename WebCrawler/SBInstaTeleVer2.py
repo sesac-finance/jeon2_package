@@ -1,7 +1,7 @@
 """
 <Version 2>
 - 신규 메시지 확인: Updater, CommandHandler, start_polling(), idle() 사용
-- 봇 종료 불가
+- Ctrl + c로 봇 종료 가능
 """
 import re
 import yaml
@@ -30,16 +30,19 @@ userpw = _cfg['userpw']
 # 인스타그램 로그인 URL
 loginURL = 'https://www.instagram.com/accounts/login/'
 
-# Chrome Option 추가
-# chrome_options = wd.ChromeOptions()
-# chrome_options.add_argument('lang=ko_KR')
-# chrome_options.add_argument('--headless')
-# chrome_options.add_argument('--no-sandbox')
-# chrome_options.add_argument('--disable-gpu')
-# chrome_options.add_argument('--single-process')
-# chrome_options.add_argument('window-size=1920,1080')
-# chrome_options.add_argument('--disable-dev-shm-usage')
-# chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36')
+chrome_options = wd.ChromeOptions()
+chrome_options.add_argument("--incognito") # 시크릿 모드
+chrome_options.add_argument("--no-sandbox") # Bypass OS security model ***** 최소 옵션
+chrome_options.add_argument("--lang=ko_KR") # 한국어 설정
+chrome_options.add_argument("--start-maximized") # open Browser in maximized mode
+chrome_options.add_argument("--disable-infobars") # disabling infobars
+chrome_options.add_argument("--disable-extensions") # disabling extensions
+chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems. 메모리가 부족해서 에러가 발생하는 것을 막아줌 ***** 최소 옵션
+chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 드라이버에 setuid를 하지 않음으로써 크롬의 충돌을 막아줌
+chrome_options.add_argument("--remote-debugging-port=9222") # 실행된 크롬창을 사용하도록 지정 (원격 디버깅 설정)
+chrome_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36") # 사람인 척 하기
+# chrome_options.add_argument("--headless") # GUI 디스플레이가 없을 때 혹은 크롤링 팝업 뜨기 원치 않을 때 사용 ***** 최소 옵션
+# chrome_options.add_argument('--single-process') # 단일 프로세스로 다중 탭 방지***** 최소 옵션. 하지만 SessionNotCreatedException 발생시키는 원흉! :(
 
 # Chrome driver 실행
 driver = wd.Chrome(service=Service(ChromeDriverManager().install())) # Selenium 4 버전 대 , options=chrome_options
@@ -153,10 +156,7 @@ def start(update, context):
  
 def stop(update, context):
     context.bot.send_message(chat_id, text="봇을 멈춥니다.")
-    updater.stop() # 작동 안 함
-    updater.is_idle = False
-    exit()
- 
+
 def skinnybrown(update, context):
     if feed:
         context.bot.send_message(chat_id, text=f"공연 관련 해시태그를 포함한 최근 게시물을 보내드려요.\n{str(feed)}")
@@ -171,12 +171,7 @@ def tags(update, context):
     context.bot.send_message(chat_id, text=f"공연 관련 해시태그를 보내드려요.\n{str(filterTags)}")
 
 def commands(update, context):
-    context.bot.send_message(chat_id, text="안녕하세요! 봇의 명령어를 알려드릴게요. :)")
-    context.bot.send_message(chat_id, text="/start: 봇을 시작합니다.")
-    context.bot.send_message(chat_id, text="/stop: 봇을 멈춥니다.")
-    context.bot.send_message(chat_id, text="/sb: 공연 관련 해시태그를 포함한 최근 게시물이 있는지 알려드려요.")
-    context.bot.send_message(chat_id, text="/posts: 최근 게시물 3개를 보내드려요.")
-    context.bot.send_message(chat_id, text="/tags: 공연 관련 해시태그를 보내드려요.")
+    context.bot.send_message(chat_id, text="안녕하세요! 봇의 명령어를 알려드릴게요. :)\n/start: 봇을 시작합니다.\n/stop: Ctrl + c 단축키로 봇을 멈춥니다.\n/sb: 공연 관련 해시태그를 포함한 최근 게시물이 있는지 알려드려요.\n/posts: 최근 게시물 3개를 보내드려요.\n/tags: 공연 관련 해시태그를 보내드려요.")
 
 add_handler('start', start)
 add_handler('stop', stop)
@@ -186,4 +181,4 @@ add_handler('tags', tags)
 add_handler('command', commands)
 
 updater.start_polling(timeout=3, clean=True)
-updater.idle()
+updater.idle() # Ctrl + c로 봇 중지
