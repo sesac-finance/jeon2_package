@@ -22,7 +22,7 @@ Done
 10. EC2 SWAP 메모리 지정 (RAM + HDD 일부)
 11. EC2 주식자동거래 모듈 스케줄링 by Lambda, EventBridge, SSM -> 정상 작동까지 확인 완료
 12. GitHub Issues Tab 정리
+13. 입력기 변경 후 VS Code 재부팅. 한글 입력 가능
 
 Pending
-1. VS Code를 .deb 형식으로 재설치 후에도 한글 입력 불가
-2. 텔레그램 봇 종료 불가 (Updater, CommandHandler 사용 시. while문으로는 정상 작동)
+1. 텔레그램 봇 종료 불가 (Updater, CommandHandler 사용 시. while문으로는 정상 작동)
