@@ -11,10 +11,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import smtplib
-from datetime import datetime
+import time
+import telegram
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
 
 ig_e = (NoSuchElementException, StaleElementReferenceException,)
 
@@ -30,13 +30,21 @@ loginURL = 'https://www.instagram.com/accounts/login/'
 # Chrome Option 추가
 chrome_options = wd.ChromeOptions()
 # chrome_options.add_argument('lang=ko_KR')
-# chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
+# chrome_options.add_argument('--headless') # ***** 최소 옵션
+# chrome_options.add_argument('--no-sandbox')
 # chrome_options.add_argument('--disable-gpu')
-# chrome_options.add_argument('--single-process')
-chrome_options.add_argument('window-size=1920,1080')
+chrome_options.add_argument('--single-process') # ***** 최소 옵션
+# chrome_options.add_argument('window-size=1920,1080')
 # chrome_options.add_argument('--disable-dev-shm-usage')
 # chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36')
+
+chrome_options.add_argument("start-maximized") # open Browser in maximized mode
+chrome_options.add_argument("disable-infobars") # disabling infobars
+chrome_options.add_argument("--disable-extensions") # disabling extensions
+chrome_options.add_argument("--disable-gpu") # applicable to windows os only
+chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems ***** 최소 옵션
+chrome_options.add_argument("--no-sandbox") # Bypass OS security model ***** 최소 옵션
+chrome_options.add_argument('--remote-debugging-port=9222')
 
 # Chrome driver 실행
 driver = wd.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options) # Selenium 4 버전 대
@@ -55,72 +63,86 @@ elem.send_keys(userpw)
 elem.send_keys(Keys.ENTER)
 
 # 로그인 정보 나중에 저장하기 클릭하고 넘어가기
-try:
-    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#react-root > section > main > div > div > div > div > button')))
-except:
-    elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_Nu > div > div > div > div.bdao358l.om3e55n1.g4tp4svg > div > div > div > div.alzwoclg.cqf1kptm.p1t2w4gn.fawcizw8.om3e55n1.g4tp4svg > div.bdao358l.cauy2b9r.alzwoclg.cmg2g80i.lk0hwhjd.nfcwbgbd.mivixfar.h4m39qi9.i54nktwv.z2vv26z9.c7y9u1f0.jez8cy9q.cqf1kptm.oq7qnk0t.o9w3sbdw.mx6umkf4.sl27f92c > div.mfclru0v.mdyuua9d.mu7z578c.dx5cv30n.b0g6smra.ixtmsaem > section > main > div > div > div > div > button')))
-
+# selector도 XPath도 일부가 바뀌어서 안 끌려올 때.. Full XPath를 쓰자!(ft. 형준 강사님)
+elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/button')))
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
-elem = WebDriverWait(driver, 20, ignored_exceptions=ig_e)\
-    .until(EC.element_to_be_clickable((By.CLASS_NAME, '_a9--._a9_1')))
-elem.click() # XPATH 일부가 매번 바뀌기 때문에 class로 찾아 줌
+elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]')))
+elem.click()
 
 skinnyURL = 'https://www.instagram.com/skinnybrownn/' # Skinny Brown Instagram URL
 driver.get(skinnyURL)
 driver.implicitly_wait(3)
 
 WebDriverWait(driver, 3, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a')))
+    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a'))) # 첫 줄(최근 포스트 3개)만 가져오기
 
-aTags = driver.find_elements(By.CSS_SELECTOR, '._ac7v._aang a')[:3] # 최근 포스트 URL
+aTags = driver.find_elements(By.CSS_SELECTOR, '._ac7v._aang a')[:3] # 최근 포스트 URL이 담긴 태그 찾기
 
-recent6 = []
-
-for a in aTags:
-    recent6.append(a.get_attribute('href'))
-    
+recent3 = [url.get_attribute('href') for url in aTags] # 최근 포스트들 URL
 filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
-feed = [] # URL, Tag 딕셔너리 담은 리스트
+feed = [] # {업로드 날짜, 해당되는 해시태그, URL, 본문}
 posts = [] # 모든 포스트(최근 3개)
-content = [] # 필요한 태그가 들어가 있는 포스트만
+content = [] # 원하는 태그가 들어가 있는 포스트만
+
+# 게시물에서 가져올 이미지들의 공통 Full XPath
+samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[2]/div/div/'
+vid = 'div[1]/div/div/video' # 게시물이 영상일 경우
+img = 'div/div[1]/div[1]/img' # 게시물이 사진일 경우
+images = [] # 게시물에서 추출한 이미지의 src를 담을 리스트
 
 for i in range(3):
-    response = requests.get(recent6[i])
+    response = requests.get(recent3[i])
     soup = BeautifulSoup(response.text, 'html.parser')
     text = re.sub('[\t\n\r\f\v]', '', soup.text)
     text = re.sub('Skinny Brown on Instagram: ', '', text)
     text = re.sub('"', '', text)
-    posts.append(text)
+    posts.append(text) # 게시물에서 본문만 추출 후 담기
     
     tags = []
     
-    for f in filterTags:
-        if f in text:
+    for f in filterTags: # 해시태그와 게시물의 본문을 대조
+        if f in text: # 포함되어 있다면 해당된 태그를 담기
             tags.append(f)
             
-            if text not in content:
+            if text not in content: # 본문이 원하는 태그가 포함된 리스트 안에 없다면 추가
                 content.append(text)
                 
-            else:
+            else: # 있다면 넘어감
                 continue
             
         else:
             continue
 
-    driver.get(recent6[i])
+    driver.get(recent3[i])
 
     date = WebDriverWait(driver, 10, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.TAG_NAME, 'time')))
+    .until(EC.presence_of_element_located((By.TAG_NAME, 'time'))) # 업로드 날짜 추출
 
     date = date.get_attribute('datetime')[:10]
 
-    urltags = f'날짜: {date} / 해시태그: {tags} / URL: {recent6[i]} / 본문: {text}'
+    try: # 게시물이 영상인 경우도 사진인 경우도 있음
+        vidtag = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+            .until(EC.presence_of_element_located((By.XPATH, samexpath + vid))) # 게시물이 영상일 경우
+
+        imgposter = vidtag.get_attribute('poster')
+
+        images.append(imgposter)
+
+    except:
+        imgtag = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+            .until(EC.presence_of_element_located((By.XPATH, samexpath + img))) # 게시물이 사진일 경우
+
+        imgsrc = imgtag.get_attribute('src')
+
+        images.append(imgsrc) # 게시물에서 추출한 이미지의 src를 담음
+
+    urltags = f'날짜: {date} / 해시태그: {tags} / URL: {recent3[i]} / 본문: {text}'
     
-    if tags == []:
+    if tags == []: # 게시물 안에 원하는 해시태그가 없을 경우 다음 게시물로 넘어감
         continue
     
     feed.append(urltags)
