@@ -11,8 +11,8 @@ In Progress
 
 Done
 1. 인스타그램 크롤러 메일 / 텔레그램 ver.
-2. EC2 자동 시작/중지 스케줄러
-3. 도커 이미지 EC2 혹은 Docker Hub에 업로드
+2. EC2 자동 시작/중지 스케줄러 -> 정상 작동까지 확인 완료
+3. 도커 이미지를 EC2, Docker Hub에 업로드
 4. EC2 주식자동거래 컨테이너 스케줄링 by crontab
 5. 주식 크롤러 데이터 시각화 (Regression)
 6. 주식 자동거래 함수 수정
@@ -20,7 +20,8 @@ Done
 8. EC2 볼륨 증량(EC2 AMI/스냅샷 vs. EBS 볼륨 수정)
 9. Docker on EC2 오류로 인해 재설치하여 복구
 10. EC2 SWAP 메모리 지정 (RAM + HDD 일부)
-11. EC2 주식자동거래 모듈 스케줄링 by Lambda, EventBridge, SSM
+11. EC2 주식자동거래 모듈 스케줄링 by Lambda, EventBridge, SSM -> 정상 작동까지 확인 완료
+12. GitHub Issues Tab 정리
 
 Pending
 1. VS Code를 .deb 형식으로 재설치 후에도 한글 입력 불가
