@@ -16,4 +16,4 @@ echo $(date '+%Y-%m-%d %H:%M:%S')
 echo "Skinny Brown의 Instagram을 매일 오후 8시에 크롤링해서 메일로 보냅니다."
 
 conda activate study
-python3 /mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/SBInstaEmail.py
+/home/jeon2/anaconda3/envs/study/bin/python3 /mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/Instagram/SBInstaEmail.py
