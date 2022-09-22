@@ -1,4 +1,3 @@
-import yaml
 import pandas as pd
 from bs4 import BeautifulSoup
 import pymysql, calendar, json
@@ -11,7 +10,7 @@ from sqlalchemy.orm import declarative_base
 pymysql.install_as_MySQLdb()
 
 db_config = {} # 2. config 불러오는 접속 방법
-with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
+with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/DeepLearning/Investar/db_config', 'r') as f:
     for l in f.readlines():
         key, value = l.rstrip().split('=')
         if key == 'port':
@@ -19,11 +18,9 @@ with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r
         else:
             db_config[key] = value
 
-# SQLalchemy
+# Pandas DataFrame을 DB로 만들어야 하기 때문에 SQLalchemy 사용하여 RDS와 연결
 Base = declarative_base() # connection 생성 (mapping 선언)
-
-# RDS와 연결
-engine = create_engine('mysql://root:' + db_config['password'] + db_config['host'], encoding='utf-8', echo=True, future=True)
+engine = create_engine(f"mysql+pymysql://root:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}", encoding='utf-8', echo=True, future=True)
 
 class DBUpdater:  
     def __init__(self):
@@ -32,12 +29,9 @@ class DBUpdater:
         try:
             self.conn = pymysql.connect(**db_config)
             print("DB 접속 성공")
-            
+
         except Exception as e:
             print(f'접속 실패: {e}')
-
-        # 3. SQLalchemy 접속 방법
-        # engine = create_engine('mysql://root:' + 'hrlGrfho8xhvZ51h1BPu' + '@database-1.cjsbgudwnoug.ap-northeast-2.rds.amazonaws.com/stock', encoding='utf-8')
         
         with self.conn.cursor() as curs:
             sql = """
@@ -119,7 +113,8 @@ class DBUpdater:
                 s = str(pgrr.a["href"]).split('=')
                 lastpage = s[-1] 
             df = pd.DataFrame()
-            pages = min(int(lastpage), pages_to_fetch)
+            # pages = min(int(lastpage), pages_to_fetch)
+            pages = 100
             for page in range(1, pages + 1):
                 pg_url = '{}&page={}'.format(url, page)
                 df = df.append(pd.read_html(pg_url, header=0)[0])

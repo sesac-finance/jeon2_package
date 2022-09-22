@@ -25,7 +25,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 ig_e = (NoSuchElementException, StaleElementReferenceException,)
 
 # 인스타그램 로그인 계정
-with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/Instagram/InstagramConfig.yaml', encoding='UTF-8') as f:
+with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/Instagram/Configs/InstagramConfig.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 username = _cfg['username']
 userpw = _cfg['userpw']

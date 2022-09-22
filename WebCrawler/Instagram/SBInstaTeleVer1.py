@@ -4,6 +4,7 @@
 - 반복문으로 '멈춰' 혹은 '그만'이라는 명령에 봇 종료 가능
 """
 import re
+import time
 import yaml
 import requests
 from bs4 import BeautifulSoup
