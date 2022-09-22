@@ -7,8 +7,6 @@ import re
 class MarketDB:
     def __init__(self):
         """생성자: MariaDB 연결 및 종목코드 딕셔너리 생성"""
-        # self.conn = pymysql.connect(host='localhost', user='root', 
-        #     password='myPa$$word', db='INVESTAR', charset='utf8')
         
         db_config = {}
         with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
@@ -18,9 +16,11 @@ class MarketDB:
                     db_config[key] = int(value)
                 else:
                     db_config[key] = value
+
         try:
             self.conn = pymysql.connect(**db_config)
             print("DB 접속 성공")
+            
         except Exception as e:
             print(f'접속 실패: {e}')
 

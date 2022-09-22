@@ -1,4 +1,3 @@
-
 import pandas as pd
 #from bs4 import BeautifulSoup
 #import urllib
@@ -13,8 +12,23 @@ from datetime import datetime
 class MarketDB:
     def __init__(self):
         """생성자: MariaDB 연결 및 종목코드 딕셔너리 생성"""
-        self.conn = pymysql.connect(host='localhost', user='root', password='myPa$$word', db='INVESTAR', charset='utf8')
+
         self.codes = dict()
+        db_config = {} #config 불러오기
+        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
+            for l in f.readlines():
+                key, value = l.rstrip().split('=')
+                if key == 'port':
+                    db_config[key] = int(value)
+                else:
+                    db_config[key] = value
+        try:
+            self.conn = pymysql.connect(**db_config)
+            print("DB 접속 성공")
+            
+        except Exception as e:
+            print(f'접속 실패: {e}')
+
         self.getCompanyInfo()
         
     def __del__(self):
