@@ -1,0 +1,73 @@
+.
+├── Analyze
+│   ├── CandleCharts
+│   │   └── kyc_CandleChart.jpg
+│   ├── Regression
+│   │   ├── DowKospi_Regr.png
+│   │   ├── KospiRegr.py
+│   │   ├── USDKospi_Regr.png
+│   │   ├── USDXKospi_Regr.png
+│   │   └── __pycache__
+│   │       ├── KospiRegr.cpython-310.pyc
+│   │       ├── Kospi_Regr.cpython-310.pyc
+│   │       └── Kospi_Regression.cpython-310.pyc
+│   └── StockData.ipynb
+├── DeepLearning
+│   ├── Investar
+│   │   ├── Analyzer.py
+│   │   ├── DBUpdater.py
+│   │   ├── MarketDB.py
+│   │   ├── __pycache__
+│   │   │   ├── Analyzer.cpython-310.pyc
+│   │   │   └── DBUpdater.cpython-310.pyc
+│   │   ├── config.json
+│   │   └── db_config
+│   └── RNN.ipynb
+├── Docker
+│   ├── Dockerfile
+│   ├── KoreaStockAutoTrade.py
+│   ├── config.yaml
+│   └── docker-compose.yml
+├── Font
+│   └── hana.ttf
+├── README.md
+├── ToDos.txt
+├── TradeModule
+│   ├── 20220915_한투손익.jpg
+│   ├── 20220920_한투손익.jpg
+│   ├── KoreaStockAutoTrade.py
+│   ├── StockAuto.sh
+│   ├── StockLog.log
+│   ├── UsaStockAutoTrade.py
+│   ├── __pycache__
+│   │   ├── FinanceFuncs.cpython-310.pyc
+│   │   ├── KoreaStockAutoTrade.cpython-310.pyc
+│   │   └── StockCrawler.cpython-310.pyc
+│   └── config.yaml
+├── WebCrawler
+│   ├── Instagram
+│   │   ├── CSV
+│   │   │   └── 2022-09-22.csv
+│   │   ├── Configs
+│   │   │   ├── InstagramConfig.yaml
+│   │   │   ├── email_config
+│   │   │   └── telegram_config
+│   │   ├── Images
+│   │   │   ├── 2022-09-16-SBInsta.jpg
+│   │   │   ├── 2022-09-18-SBInsta.jpg
+│   │   │   └── 2022-09-19-SBInsta.jpg
+│   │   ├── RPA
+│   │   │   ├── SBInstaEmail.log
+│   │   │   └── SBInstaEmail.sh
+│   │   ├── SBInstaEmail.py
+│   │   ├── SBInstaTeleVer1.py
+│   │   └── SBInstaTeleVer2.py
+│   ├── StockCrawler.py
+│   └── __pycache__
+│       ├── InstaCrawler.cpython-310.pyc
+│       └── SBInstaTele.cpython-310.pyc
+├── jeon2tree.txt
+├── requirements.txt
+└── urls.txt
+
+18 directories, 52 files

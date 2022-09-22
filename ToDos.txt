@@ -1,13 +1,10 @@
 To Dos
 1. 인스타그램 크롤러 새로운 포스트 있을 때만 메일링 혹은 텔레그램
-2. 인스타그램 크롤러 메일: 파일 첨부 기능 추가
+2. 주식 크롤러 데이터 시각화: 현금 잔고 추이
+3. RNN 주가 예측
 
 In Progress
-1. 패키지_모듈 구조로 작업 정리
-2. 주식 크롤러 데이터 시각화: 변동성 돌파 전략 기반 매수 여부 확인, 거래 현황, 주식/현금 잔고
-3. RNN 주가 예측
-4. 인스타그램 크롤러: 이미지 수집 및 첨부 기능 추가
-5. 웹크롤링 데이터 RDS에 쌓기(Pandas DataFrame to MariaDB by SQLAlchemy)
+1. 웹크롤링 데이터 RDS에 쌓기(Pandas DataFrame to MariaDB by SQLAlchemy)
 
 Done
 1. 인스타그램 크롤러 메일 / 텔레그램 ver.
@@ -24,6 +21,10 @@ Done
 12. GitHub Issues Tab 정리 및 9가지 문제 해결 on 9/21
 13. 입력기 변경 후 VS Code 재부팅. 한글 입력 가능
 14. 텔레그램 봇 종료 기능 구현 (Ver.1 while/break. Ver.2 Updater, CommandHandler, idle(), Ctrl + c)
+15. 인스타그램 크롤러 메일: 파일, 이미지 첨부 기능 추가
+16. 인스타그램 크롤러 텔레그램: 이미지 첨부 기능 추가
+17. 패키지 구조 정리
+18. 주식 크롤러 데이터 시각화: 변동성 돌파 전략 기반 매수 여부 확인
 
-Pending
+Pending by Issues
 1. 
