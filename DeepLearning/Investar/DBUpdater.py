@@ -118,7 +118,7 @@ class DBUpdater:
             df = df.dropna()
             df[['close', 'diff', 'open', 'high', 'low', 'volume']] = df[['close',
                 'diff', 'open', 'high', 'low', 'volume']].astype(int)
-            df = df[['date', 'open', 'high', 'low', 'close', 'diff', 'volume']]
+            df = df[['date', 'open', 'high', 'low', 'close', 'diff', 'volume']]      
         except Exception as e:
             print('Exception occured :', str(e))
             return None
@@ -133,6 +133,7 @@ class DBUpdater:
                     f"{r.diff}, {r.volume})"
                 curs.execute(sql)
             self.conn.commit()
+            df.to_sql('daily_price', engine, if_exists='replace', index=False, index_label=None, chunksize=500)
             print('[{}] #{:04d} {} ({}) : {} rows > REPLACE INTO daily_'\
                 'price [OK]'.format(datetime.now().strftime('%Y-%m-%d'\
                 ' %H:%M'), num+1, company, code, len(df)))

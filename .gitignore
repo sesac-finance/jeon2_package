@@ -9,6 +9,7 @@
 *secret*
 db_config
 email_config
+telegram_config
 
 # 한국투자증권 주식 매매 자동화
 config.yaml
