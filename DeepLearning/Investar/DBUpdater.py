@@ -1,17 +1,27 @@
 import pandas as pd
 from bs4 import BeautifulSoup
-import urllib, pymysql, calendar, time, json
+import pymysql, calendar, time, json
 from urllib.request import urlopen
 from datetime import datetime
 from threading import Timer
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import declarative_base
+
+pymysql.install_as_MySQLdb()
+
+# SQLalchemy
+Base = declarative_base() # connection 생성 (mapping 선언)
+
+# RDS와 연결
+engine = create_engine('mysql://root:' + 'hrlGrfho8xhvZ51h1BPu' + '@database-1.cjsbgudwnoug.ap-northeast-2.rds.amazonaws.com/stock', encoding='utf-8', echo=True, future=True)
 
 class DBUpdater:  
     def __init__(self):
         """생성자: MariaDB 연결 및 종목코드 딕셔너리 생성"""
-        # self.conn = pymysql.connect(host='localhost', user='root',
+        # self.conn = pymysql.connect(host='localhost', user='root', # 1. 기존 접속 방법
         #     password='myPa$$word', db='INVESTAR', charset='utf8')
-
-        db_config = {}
+        
+        db_config = {} # 2. config 불러오는 접속 방법
         with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
             for l in f.readlines():
                 key, value = l.rstrip().split('=')
@@ -24,6 +34,9 @@ class DBUpdater:
             print("DB 접속 성공")
         except Exception as e:
             print(f'접속 실패: {e}')
+
+        # 3. SQLalchemy 접속 방법
+        # engine = create_engine('mysql://root:' + 'hrlGrfho8xhvZ51h1BPu' + '@database-1.cjsbgudwnoug.ap-northeast-2.rds.amazonaws.com/stock', encoding='utf-8')
         
         with self.conn.cursor() as curs:
             sql = """
@@ -126,13 +139,22 @@ class DBUpdater:
 
     def replace_into_db(self, df, num, code, company):
         """네이버에서 읽어온 주식 시세를 DB에 REPLACE"""
-        with self.conn.cursor() as curs:
+        # with self.conn.cursor() as curs:
+        #     for r in df.itertuples(): # Ver. 1
+        #         sql = f"REPLACE INTO daily_price VALUES ('{code}', "\
+        #             f"'{r.date}', {r.open}, {r.high}, {r.low}, {r.close}, "\
+        #             f"{r.diff}, {r.volume})"
+        #         curs.execute(sql)
+        #     self.conn.commit()
+
+        with engine.connect() as SAconn:
             for r in df.itertuples():
                 sql = f"REPLACE INTO daily_price VALUES ('{code}', "\
                     f"'{r.date}', {r.open}, {r.high}, {r.low}, {r.close}, "\
                     f"{r.diff}, {r.volume})"
-                curs.execute(sql)
-            self.conn.commit()
+                SAconn.execute(text(sql))
+            SAconn.commit()
+
             df.to_sql('daily_price', engine, if_exists='replace', index=False, index_label=None, chunksize=500)
             print('[{}] #{:04d} {} ({}) : {} rows > REPLACE INTO daily_'\
                 'price [OK]'.format(datetime.now().strftime('%Y-%m-%d'\
@@ -156,7 +178,7 @@ class DBUpdater:
                 pages_to_fetch = config['pages_to_fetch']
         except FileNotFoundError:
             with open('config.json', 'w') as out_file:
-                pages_to_fetch = 100 
+                pages_to_fetch = 100 # 전체 종목별로 100페이지 읽어오기(100페이지 = 1000일. 1000일 / 250일(1년 개장일) = 4년치 데이터)
                 config = {'pages_to_fetch': 1}
                 json.dump(config, out_file)
         self.update_daily_price(pages_to_fetch)
