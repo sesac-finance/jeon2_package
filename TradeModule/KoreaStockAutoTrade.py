@@ -1,10 +1,14 @@
+import time
 import json
-import datetime
 import time
 import yaml
+import datetime
 import requests
 from bs4 import BeautifulSoup
 
+URL = 'https://finance.naver.com/sise/sise_quant.nhn'
+
+# 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
 with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
@@ -212,10 +216,13 @@ def sell(code="005930", qty="1"):
         return False
 
 def StockCrawler():
-    URL = 'https://finance.naver.com/sise/sise_quant.nhn'
+    """네이버 금융_국내증시_거래상위_코스피 탭에서 거래량 내림차순 순으로 주식 종목코드 5개를 가져옵니다.
+    \n조건 1. 인버스/레버리지 ETF 제외
+    \n조건 2. 현재가 <= 주문 가능한 현금 잔고 // 5
+    """
     res = requests.get(URL)
 
-    soup = BeautifulSoup(res.text, 'html.parser')
+    soup = BeautifulSoup(res.text, 'lxml') # html.parser
     stocks = soup.select('.type_2 tr')[2:]
     
     codes = []
@@ -308,6 +315,7 @@ try:
         if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
             send_message("프로그램을 종료합니다.")
             break
+
 except Exception as e:
     send_message(f"[오류 발생]{e}")
     time.sleep(1)

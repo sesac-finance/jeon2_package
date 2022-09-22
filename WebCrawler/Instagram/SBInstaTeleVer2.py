@@ -41,7 +41,7 @@ chrome_options.add_argument("--disable-extensions") # disabling extensions
 chrome_options.add_argument("--disable-dev-shm-usage") # overcome limited resource problems. 메모리가 부족해서 에러가 발생하는 것을 막아줌 ***** 최소 옵션
 chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 드라이버에 setuid를 하지 않음으로써 크롬의 충돌을 막아줌
 chrome_options.add_argument("--remote-debugging-port=9222") # 실행된 크롬창을 사용하도록 지정 (원격 디버깅 설정)
-chrome_options.add_argument("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36") # 사람인 척 하기
+chrome_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36") # 사람인 척 하기
 # chrome_options.add_argument("--headless") # GUI 디스플레이가 없을 때 혹은 크롤링 팝업 뜨기 원치 않을 때 사용 ***** 최소 옵션
 # chrome_options.add_argument('--single-process') # 단일 프로세스로 다중 탭 방지***** 최소 옵션. 하지만 SessionNotCreatedException 발생시키는 원흉! :(
 
