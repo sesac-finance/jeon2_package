@@ -17,7 +17,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 import telegram
-from telegram.ext import Updater, CommandHandler
 
 ig_e = (NoSuchElementException, StaleElementReferenceException,)
 

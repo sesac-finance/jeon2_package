@@ -1,6 +1,7 @@
+import yaml
 import pandas as pd
 from bs4 import BeautifulSoup
-import pymysql, calendar, time, json
+import pymysql, calendar, json
 from urllib.request import urlopen
 from datetime import datetime
 from threading import Timer
@@ -9,29 +10,29 @@ from sqlalchemy.orm import declarative_base
 
 pymysql.install_as_MySQLdb()
 
+db_config = {} # 2. config 불러오는 접속 방법
+with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
+    for l in f.readlines():
+        key, value = l.rstrip().split('=')
+        if key == 'port':
+            db_config[key] = int(value)
+        else:
+            db_config[key] = value
+
 # SQLalchemy
 Base = declarative_base() # connection 생성 (mapping 선언)
 
 # RDS와 연결
-engine = create_engine('mysql://root:' + 'hrlGrfho8xhvZ51h1BPu' + '@database-1.cjsbgudwnoug.ap-northeast-2.rds.amazonaws.com/stock', encoding='utf-8', echo=True, future=True)
+engine = create_engine('mysql://root:' + db_config['password'] + db_config['host'], encoding='utf-8', echo=True, future=True)
 
 class DBUpdater:  
     def __init__(self):
         """생성자: MariaDB 연결 및 종목코드 딕셔너리 생성"""
-        # self.conn = pymysql.connect(host='localhost', user='root', # 1. 기존 접속 방법
-        #     password='myPa$$word', db='INVESTAR', charset='utf8')
-        
-        db_config = {} # 2. config 불러오는 접속 방법
-        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
-            for l in f.readlines():
-                key, value = l.rstrip().split('=')
-                if key == 'port':
-                    db_config[key] = int(value)
-                else:
-                    db_config[key] = value
+
         try:
             self.conn = pymysql.connect(**db_config)
             print("DB 접속 성공")
+            
         except Exception as e:
             print(f'접속 실패: {e}')
 
