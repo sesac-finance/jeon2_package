@@ -9,7 +9,7 @@ class MarketDB:
         """생성자: MariaDB 연결 및 종목코드 딕셔너리 생성"""
         
         db_config = {}
-        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
+        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/DeepLearning/Investar/db_config', 'r') as f:
             for l in f.readlines():
                 key, value = l.rstrip().split('=')
                 if key == 'port':

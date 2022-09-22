@@ -15,7 +15,7 @@ class MarketDB:
 
         self.codes = dict()
         db_config = {} #config 불러오기
-        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/Database/db_config', 'r') as f:
+        with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/DeepLearning/Investar/db_config', 'r') as f:
             for l in f.readlines():
                 key, value = l.rstrip().split('=')
                 if key == 'port':
