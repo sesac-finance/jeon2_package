@@ -18,66 +18,64 @@
 <br>
 
 ## 폴더 구조
-
-📦jeon2_package
- ┣ 📂Analyze
- ┃ ┣ 📂CandleCharts
- ┃ ┃ ┗ 📜kyc_CandleChart.jpg
- ┃ ┣ 📂Regression
- ┃ ┃ ┣ 📜DowKospi_Regr.png
- ┃ ┃ ┣ 📜KospiRegr.py
- ┃ ┃ ┣ 📜USDKospi_Regr.png
- ┃ ┃ ┗ 📜USDXKospi_Regr.png
- ┃ ┗ 📜StockData.ipynb
- ┣ 📂DeepLearning
- ┃ ┣ 📂Investar
- ┃ ┃ ┣ 📜Analyzer.py
- ┃ ┃ ┣ 📜DBUpdater.py
- ┃ ┃ ┣ 📜MarketDB.py
- ┃ ┃ ┣ 📜config.json
- ┃ ┃ ┗ 📜db_config
- ┃ ┗ 📜RNN.ipynb
- ┣ 📂Docker
- ┃ ┣ 📜Dockerfile
- ┃ ┣ 📜KoreaStockAutoTrade.py
- ┃ ┣ 📜config.yaml
- ┃ ┗ 📜docker-compose.yml
- ┣ 📂Font
- ┃ ┗ 📜hana.ttf
- ┣ 📂TradeModule
- ┃ ┣ 📜20220915_한투손익.jpg
- ┃ ┣ 📜20220920_한투손익.jpg
- ┃ ┣ 📜KoreaStockAutoTrade.py
- ┃ ┣ 📜StockAuto.sh
- ┃ ┣ 📜StockLog.log
- ┃ ┣ 📜UsaStockAutoTrade.py
- ┃ ┗ 📜config.yaml
- ┣ 📂WebCrawler
- ┃ ┣ 📂Instagram
- ┃ ┃ ┣ 📂CSV
- ┃ ┃ ┃ ┗ 📜2022-09-22.csv
- ┃ ┃ ┣ 📂Configs
- ┃ ┃ ┃ ┣ 📜InstagramConfig.yaml
- ┃ ┃ ┃ ┣ 📜email_config
- ┃ ┃ ┃ ┗ 📜telegram_config
- ┃ ┃ ┣ 📂Images
- ┃ ┃ ┃ ┣ 📜2022-09-16-SBInsta.jpg
- ┃ ┃ ┃ ┣ 📜2022-09-18-SBInsta.jpg
- ┃ ┃ ┃ ┗ 📜2022-09-19-SBInsta.jpg
- ┃ ┃ ┣ 📂RPA
- ┃ ┃ ┃ ┣ 📜SBInstaEmail.log
- ┃ ┃ ┃ ┗ 📜SBInstaEmail.sh
- ┃ ┃ ┣ 📜SBInstaEmail.py
- ┃ ┃ ┣ 📜SBInstaTeleVer1.py
- ┃ ┃ ┗ 📜SBInstaTeleVer2.py
- ┃ ┗ 📜StockCrawler.py
- ┣ 📜.gitignore
- ┣ 📜README.md
- ┣ 📜ToDos.txt
- ┣ 📜jeon2tree.txt
- ┣ 📜requirements.txt
- ┗ 📜urls.txt
-
+📦jeon2_package  
+ ┣ 📂Analyze  
+ ┃ ┣ 📂CandleCharts  
+ ┃ ┃ ┗ 📜kyc_CandleChart.jpg  
+ ┃ ┣ 📂Regression  
+ ┃ ┃ ┣ 📜DowKospi_Regr.png  
+ ┃ ┃ ┣ 📜KospiRegr.py  
+ ┃ ┃ ┣ 📜USDKospi_Regr.png  
+ ┃ ┃ ┗ 📜USDXKospi_Regr.png  
+ ┃ ┗ 📜StockData.ipynb  
+ ┣ 📂DeepLearning  
+ ┃ ┣ 📂Investar  
+ ┃ ┃ ┣ 📜Analyzer.py  
+ ┃ ┃ ┣ 📜DBUpdater.py  
+ ┃ ┃ ┣ 📜MarketDB.py  
+ ┃ ┃ ┣ 📜config.json  
+ ┃ ┃ ┗ 📜db_config  
+ ┃ ┗ 📜RNN.ipynb  
+ ┣ 📂Docker  
+ ┃ ┣ 📜Dockerfile  
+ ┃ ┣ 📜KoreaStockAutoTrade.py  
+ ┃ ┣ 📜config.yaml  
+ ┃ ┗ 📜docker-compose.yml  
+ ┣ 📂Font  
+ ┃ ┗ 📜hana.ttf  
+ ┣ 📂TradeModule  
+ ┃ ┣ 📜20220915_한투손익.jpg  
+ ┃ ┣ 📜20220920_한투손익.jpg  
+ ┃ ┣ 📜KoreaStockAutoTrade.py  
+ ┃ ┣ 📜StockAuto.sh  
+ ┃ ┣ 📜StockLog.log  
+ ┃ ┣ 📜UsaStockAutoTrade.py  
+ ┃ ┗ 📜config.yaml  
+ ┣ 📂WebCrawler  
+ ┃ ┣ 📂Instagram  
+ ┃ ┃ ┣ 📂CSV  
+ ┃ ┃ ┃ ┗ 📜2022-09-22.csv  
+ ┃ ┃ ┣ 📂Configs  
+ ┃ ┃ ┃ ┣ 📜InstagramConfig.yaml  
+ ┃ ┃ ┃ ┣ 📜email_config  
+ ┃ ┃ ┃ ┗ 📜telegram_config  
+ ┃ ┃ ┣ 📂Images  
+ ┃ ┃ ┃ ┣ 📜2022-09-16-SBInsta.jpg  
+ ┃ ┃ ┃ ┣ 📜2022-09-18-SBInsta.jpg  
+ ┃ ┃ ┃ ┗ 📜2022-09-19-SBInsta.jpg  
+ ┃ ┃ ┣ 📂RPA  
+ ┃ ┃ ┃ ┣ 📜SBInstaEmail.log  
+ ┃ ┃ ┃ ┗ 📜SBInstaEmail.sh  
+ ┃ ┃ ┣ 📜SBInstaEmail.py  
+ ┃ ┃ ┣ 📜SBInstaTeleVer1.py  
+ ┃ ┃ ┗ 📜SBInstaTeleVer2.py  
+ ┃ ┗ 📜StockCrawler.py  
+ ┣ 📜.gitignore  
+ ┣ 📜README.md  
+ ┣ 📜ToDos.txt  
+ ┣ 📜jeon2tree.txt  
+ ┣ 📜requirements.txt  
+ ┗ 📜urls.txt  
 18 directories, 52 files
 
 ## 모듈 설명
@@ -159,3 +157,5 @@
 - requirements.txt: Anaconda 가상환경에 설치된 패키지들 목록
 
 - jeon2tree.txt: 프로젝트 테크트리
+
+- SeSACProject_JiyeonLee.odp: 프로젝트 PPT 발표자료
