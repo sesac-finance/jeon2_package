@@ -182,7 +182,7 @@ for img in images: # imges에 담긴 src로 실체화하여 로컬에 이미지 
 SMTP_SERVER = 'smtp.naver.com'
 SMTP_PORT = 465
 SMTP_USER = 'qqyun15@naver.com'
-SMTP_PASSWORD = open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/Instagram/email_config', 'r').read().rstrip()
+SMTP_PASSWORD = open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/WebCrawler/Instagram/Configs/email_config', 'r').read().rstrip()
 
 msg = MIMEMultipart('mixed')
 
