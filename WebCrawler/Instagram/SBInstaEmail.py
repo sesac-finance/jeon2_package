@@ -65,8 +65,12 @@ elem.send_keys(Keys.ENTER)
 
 # 로그인 정보 나중에 저장하기 클릭하고 넘어가기
 # selector도 XPath도 일부가 바뀌어서 안 끌려올 때.. Full XPath를 쓰자!
-elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
-    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/section/main/div/div/div/div/button')))
+try:
+    elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/section/main/div/div/div/div/button')))
+except:
+    elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/button')))
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
