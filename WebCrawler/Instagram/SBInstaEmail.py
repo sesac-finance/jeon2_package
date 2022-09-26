@@ -83,7 +83,7 @@ driver.get(skinnyURL)
 driver.implicitly_wait(3)
 
 WebDriverWait(driver, 3, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a'))) # 첫 줄(최근 포스트 3개)만 가져오기
+    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a'))) # 첫 줄(최근 포스트 3개)만 가져오기. '._ac7v._aang a'
 
 aTags = driver.find_elements(By.CSS_SELECTOR, '._ac7v._aang a')[:3] # 최근 포스트 URL이 담긴 태그 찾기
 
@@ -94,9 +94,9 @@ posts = [] # 모든 포스트(최근 3개)
 content = [] # 원하는 태그가 들어가 있는 포스트만
 
 # 게시물에서 가져올 이미지들의 공통 Full XPath
-samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[1]/div/div/'
-vid = 'div[1]/div/div/video' # 게시물이 영상일 경우
-img = 'div/div[1]/div[1]/img' # 게시물이 사진일 경우
+samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[1]/div/'
+vid = 'div/div[1]/div/div/video' # 게시물이 영상일 경우
+img = 'div[1]/div[2]/div/div/div/ul/li[3]/div/div/div/div/div[1]/img' # 게시물이 사진일 경우
 imguploaded = [] # 게시물의 게시일을 담을 리스트. for dict_keys
 images = [] # 게시물에서 추출한 이미지의 src를 담을 리스트. for dict_values
 
