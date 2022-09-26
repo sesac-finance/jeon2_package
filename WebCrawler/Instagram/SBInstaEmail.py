@@ -203,7 +203,7 @@ attachimgs = os.listdir(imgpath) # 첨부파일들 담을 리스트 작업 시�
 attachments = []
 attachments.append(csvpath)
 
-for attachimg in attachimgs: # 경로가 다른 사진들 각각에 절대경로 부여
+for attachimg in attachimgs[-3:]: # 경로가 다른 사진들 각각에 절대경로 부여
     target_img = imgpath + attachimg
     attachments.append(target_img)
 
