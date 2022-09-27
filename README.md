@@ -156,6 +156,6 @@
 
 - requirements.txt: Anaconda 가상환경에 설치된 패키지들 목록
 
-- jeon2tree.txt: 프로젝트 테크트리
+- jeon2tree.txt: 프로젝트 파일 트리
 
 - SeSACProject_JiyeonLee.odp: 프로젝트 PPT 발표자료
