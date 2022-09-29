@@ -235,7 +235,8 @@ def StockCrawler():
             price = stock.select_one('.number').text.replace(',', '')
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
-            if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)):
+            # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)): # default
+            if int(price) <= (blance / counts): # added for an improvement on 9/29
                 codes.append(code)
             else:
                 pass
