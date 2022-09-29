@@ -18,7 +18,7 @@ WORKDIR /jiyeon
 
 RUN pip install --upgrade pip
 
-RUN pip install -U requests datetime beautifulsoup4 pyyaml
+RUN pip install -U requests datetime beautifulsoup4 pyyaml lxml
 
 COPY KoreaStockAutoTrade.py ./KoreaStockAutoTrade.py
 
