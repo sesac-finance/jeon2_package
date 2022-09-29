@@ -1,12 +1,9 @@
-import time
 import json
 import time
 import yaml
 import datetime
 import requests
 from bs4 import BeautifulSoup
-
-URL = 'https://finance.naver.com/sise/sise_quant.nhn'
 
 # 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
 with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/config.yaml', encoding='UTF-8') as f:
@@ -220,6 +217,8 @@ def StockCrawler():
     \n조건 1. 인버스/레버리지 ETF 제외
     \n조건 2. 현재가 <= 주문 가능한 현금 잔고 // 5
     """
+
+    URL = 'https://finance.naver.com/sise/sise_quant.nhn'
     res = requests.get(URL)
 
     soup = BeautifulSoup(res.text, 'lxml') # html.parser
@@ -276,13 +275,15 @@ try:
         if today == 5 or today == 6:  # 토요일이나 일요일이면 자동 종료
             send_message("주말이므로 프로그램을 종료합니다.")
             break
-        if t_9 < t_now < t_start and soldout == False: # 잔여 수량 매도
+        if t_9 < t_now < t_start and soldout == False: # AM 09:00 ~ AM 09:05 : 잔여 수량 매도
             for sym, qty in stock_dict.items():
                 sell(sym, qty)
             soldout == True
             bought_list = []
             stock_dict = get_stock_balance()
-        if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수
+        # if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수 # default
+        t_sell_new = t_now.replace(hour=12, minute=0, second=0, microsecond=0) # added for an improvement on 9/29
+        if t_start < t_now < t_sell_new :  # AM 09:05 ~ PM 12:00 : 매수. added for an improvement on 9/29
             for sym in symbol_list:
                 if len(bought_list) < target_buy_count:
                     if sym in bought_list:
