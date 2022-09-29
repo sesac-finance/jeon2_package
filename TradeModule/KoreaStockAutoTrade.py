@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # 한국투자증권 Open API key, 디스코드 웹훅 URL 설정 파일
-with open('/mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/config.yaml', encoding='UTF-8') as f:
+with open('/media/jeon2/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/config.yaml', encoding='UTF-8') as f:
     _cfg = yaml.load(f, Loader=yaml.FullLoader)
 APP_KEY = _cfg['APP_KEY']
 APP_SECRET = _cfg['APP_SECRET']
