@@ -62,13 +62,17 @@ elem.send_keys(Keys.ENTER)
 
 # 로그인 정보 나중에 저장하기 클릭하고 넘어가기
 # selector도 XPath도 일부가 바뀌어서 안 끌려올 때.. Full XPath를 쓰자!
-elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
-    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/button')))
+try:
+    elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#mount_0_0_PR > div > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div > div > div.x78zum5.xdt5ytf.x10cihs4.x1t2pt76.x1n2onr6.x1ja2u2z > div.x9f619.xnz67gz.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh.x1uhb9sk.x1plvlek.xryxfnj.x1c4vz4f.x2lah0s.x1q0g3np.xqjyukv.x1qjc9v5.x1oa3qoh.x1qughib > div.xh8yej3.x1gryazu.x10o80wk.x14k21rp.x1porb0y.x17snn68.x6osk4m > section > main > div > div > div > div > button')))
+except:
+    elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
+        .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/button')))
 elem.click()
 
 # 설정 나중에 하기 클릭하고 넘어가기
 elem = WebDriverWait(driver, 5, ignored_exceptions=ig_e)\
-    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]')))
+    .until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]')))
 elem.click()
 
 skinnyURL = 'https://www.instagram.com/skinnybrownn/' # Skinny Brown Instagram URL
@@ -76,10 +80,10 @@ driver.get(skinnyURL)
 driver.implicitly_wait(3)
 
 WebDriverWait(driver, 3, ignored_exceptions=ig_e)\
-    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a'))) # 첫 줄(최근 포스트 3개)만 가져오기
+    .until(EC.presence_of_element_located((By.CSS_SELECTOR, '._ac7v._aang a'))) # 첫 줄(최근 포스트 3개)만 가져오기. '._ac7v._aang a'   
 
 aTags = driver.find_elements(By.CSS_SELECTOR, '._ac7v._aang a')[:3] # 최근 포스트 URL이 담긴 태그 찾기
-
+    
 recent3 = [url.get_attribute('href') for url in aTags] # 최근 포스트들 URL
 filterTags = ['#콘서트', '#concert', '#CONCERT', '#공연', '#페스티벌', '#festival', '#FESTIVAL', '#라인업', '#lineup', '#LINEUP', '#티켓', '#ticket', '#TICKET', '#사인회']
 feed = [] # {업로드 날짜, 해당되는 해시태그, URL, 본문}
@@ -87,9 +91,9 @@ posts = [] # 모든 포스트(최근 3개)
 content = [] # 원하는 태그가 들어가 있는 포스트만
 
 # 게시물에서 가져올 이미지들의 공통 Full XPath
-samexpath = '/html/body/div[1]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[1]/div/div/'
-vid = 'div[1]/div/div/video' # 게시물이 영상일 경우
-img = 'div/div[1]/div[1]/img' # 게시물이 사진일 경우
+samexpath = '/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div[1]/div[1]/article/div/div[1]/div/'
+vid = 'div/div/div/div/div/div/div/div/div[1]/img' # 게시물이 영상일 경우
+img = 'div[1]/div[2]/div/div/div/ul/li[3]/div/div/div/div/div[1]/img' # 게시물이 사진일 경우
 imguploaded = [] # 게시물의 게시일을 담을 리스트. for dict_keys
 images = [] # 게시물에서 추출한 이미지의 src를 담을 리스트. for dict_values
 

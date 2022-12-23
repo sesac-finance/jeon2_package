@@ -181,6 +181,7 @@ def buy(code="005930", qty="1"):
         return True
     else:
         send_message(f"[매수 실패]{str(res.json())}")
+        symbol_list.remove(sym) # added for an improvement on 10/19
         return False
 
 def sell(code="005930", qty="1"):
@@ -227,7 +228,7 @@ def StockCrawler():
     codes = []
 
     blance = get_balance() # 추가
-    counts = 5 # 추가
+    counts = 10 # 추가
     
     for stock in stocks:
         try:
@@ -236,7 +237,8 @@ def StockCrawler():
             code = stock.select_one('.tltle').attrs['href'][-6:]
 
             # if (('인버스' not in stock_n) and ('레버리지' not in stock_n)) and (int(price) <= (blance / counts)): # default
-            if int(price) <= (blance / counts): # added for an improvement on 9/29
+            # if int(price) <= (blance / counts): # added for an improvement on 9/29
+            if int(price) <= 30000: # added for an improvement on 10/7
                 codes.append(code)
             else:
                 pass
@@ -263,7 +265,7 @@ try:
     soldout = False
 
     send_message("===국내 주식 자동매매 프로그램을 시작합니다===")
-    send_message(f"거래상위 5개 종목: {symbol_list}")
+    send_message(f"거래상위 10개 종목: {symbol_list}")
 
     while True:
         t_now = datetime.datetime.now()
@@ -282,9 +284,9 @@ try:
             soldout == True
             bought_list = []
             stock_dict = get_stock_balance()
-        # if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수 # default
-        t_sell_new = t_now.replace(hour=12, minute=0, second=0, microsecond=0) # added for an improvement on 9/29
-        if t_start < t_now < t_sell_new :  # AM 09:05 ~ PM 12:00 : 매수. added for an improvement on 9/29
+        if t_start < t_now < t_sell :  # AM 09:05 ~ PM 03:15 : 매수 # default
+        # t_sell_new = t_now.replace(hour=12, minute=0, second=0, microsecond=0) # added for an improvement on 9/29
+        # if t_start < t_now < t_sell_new :  # AM 09:05 ~ PM 12:00 : 매수. added for an improvement on 9/29
             for sym in symbol_list:
                 if len(bought_list) < target_buy_count:
                     if sym in bought_list:
@@ -301,6 +303,11 @@ try:
                                 soldout = False
                                 bought_list.append(sym)
                                 get_stock_balance()
+                            # elif (result == False) and ('APBK1680' in {str(res.json())}) : # result == False. added for an improvement on 10/7 str(res.json())
+                            #     pass
+                            else:
+                                continue
+
                     time.sleep(1)
             time.sleep(1)
             if t_now.minute == 30 and t_now.second <= 5: 

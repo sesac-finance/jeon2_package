@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/linux,visualstudiocode,venv,python,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,visualstudiocode,venv,python,jupyternotebooks
 
+# AWS
+AWS/
+
 # for Security
 /.idea
 *.iml

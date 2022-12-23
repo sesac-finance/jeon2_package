@@ -13,7 +13,7 @@ else
 fi
 
 echo $(date '+%Y-%m-%d %H:%M:%S')
-echo "평일 오전 9시 10분에 자동으로 주식 매매를 시작합니다."
+echo "평일 오전 9시에 자동으로 주식 매매를 시작합니다."
 
 conda activate study
-python3 /mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/KoreaStockAutoTrade.py
+python /mnt/FE0A5E240A5DDA6B/workspace/jeon2_package/TradeModule/KoreaStockAutoTrade.py
