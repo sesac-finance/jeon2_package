@@ -7,7 +7,8 @@ import matplotlib.pylab as plt # 그래프 출력
 from datetime import datetime
 import os
 
-kospi = pdr.get_data_yahoo('^KS11', '2000-01-04') # KOSPI, 2000-01-04~
+# kospi = pdr.get_data_yahoo('^KS11', '2000-01-04') # KOSPI, 2000-01-04~
+kospi = pdr.get_data_yahoo('^KS11', '2008-12-16') # KOSPI, 2008-12-16~
 today = datetime.now().date() # 오늘 날짜
 workspace = os.getcwd() # 현재 작업 경로 확인
 
